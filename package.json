@@ -6,7 +6,11 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "stylelint": "stylelint src/app/css/*.css",
+    "eslint": "eslint src/app/",
+    "format": "prettier --write src/app"
+
   },
   "dependencies": {
     "next": "14.0.1",
@@ -22,6 +26,7 @@
     "husky": "^8.0.3",
     "prettier": "3.0.3",
     "stylelint": "^15.11.0",
+    "stylelint-config-standard": "^34.0.0",
     "typescript": "^5"
   }
 }
