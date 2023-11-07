@@ -1,0 +1,15 @@
+.nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #818FB4;
+}
+.list {
+    list-style: none;
+}
+.list li{
+    font-size: 28px;
+    font-weight: 300;
+    display: inline-block;
+    margin: 0 40px;
+}

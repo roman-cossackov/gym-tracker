@@ -1,0 +1,18 @@
+.tools {
+    background-color: #F5E8C7;
+    flex: 2;
+    height: 500px;
+    text-align: center;
+    border: 1px solid black;
+}
+.navigation {
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.navigation button {
+    margin: 0px 10px;
+    width: 100px;
+    height: 40px;
+}
