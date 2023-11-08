@@ -1,7 +1,7 @@
 [build]
-  command = "npm run build"
+  command = "yarn build"
   publish = ".next"
 
 [context.deploy-preview]
-  command = "npm run build"
+  command = "yarn build"
   publish = ".next"
