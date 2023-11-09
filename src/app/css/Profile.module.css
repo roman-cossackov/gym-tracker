@@ -1,12 +1,10 @@
 .profile {
-    background-color: #F5E8C7;
     flex: 1;
     height: 500px;
     text-align: center;
-    border: 1px solid black;
 }
 .avatar {
-    background-color: white;
+    background-color: rgb(244, 241, 241);
     width: 110px;
     height: 110px;
     border-radius: 50%;
