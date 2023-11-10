@@ -1,5 +1,3 @@
-import React from 'react';
-
 import styles from '../css/Tools.module.css';
 import CurrentDay from './CurrentDay';
 

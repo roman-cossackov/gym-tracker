@@ -3,18 +3,22 @@
     justify-content: space-between;
     align-items: center;
     background-color: rgb(244, 241, 241);
+    border-bottom: 1px solid lightgray;
 }
 .list {
     list-style: none;
 }
-.list a{
-    font-size: 28px;
-    font-weight: 300;
+.list li {
     display: inline-block;
     margin: 0 40px;
+}
+.list a {
+    font-size: 28px;
+    font-weight: 300;
     color: black;
     text-decoration: none;
 }
 .header {
+    color: black;
     margin-left: 20px;
 }
