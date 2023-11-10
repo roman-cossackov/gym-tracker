@@ -1,19 +1,21 @@
-import styles from '../css/Navbar.module.css';
-import Link from 'next/link';
+import styles from "../css/Navbar.module.css";
+import Link from "next/link";
 
 const Navbar = () => {
     return (
         <nav className={styles.nav}>
-            <h1 className={styles.header}>Nav Bar</h1>
+            <Link href="/" className={styles.header}>
+                Nav Bar
+            </Link>
             <ul className={styles.list}>
                 <li>
                     <Link href="plans">Plans</Link>
                 </li>
                 <li>
-                    <Link href="/">Link2</Link>
+                    <Link href="articles">Articles</Link>
                 </li>
                 <li>
-                    <Link href="/">Link3</Link>
+                    <Link href="diet-constructor">Diet Constructor</Link>
                 </li>
             </ul>
         </nav>

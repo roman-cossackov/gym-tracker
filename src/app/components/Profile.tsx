@@ -1,4 +1,7 @@
-import styles from '../css/Profile.module.css';
+"use client";
+
+import styles from "../css/Profile.module.css";
+import { auth } from "../../../firebase/firebase";
 
 const Profile = () => {
     return (
@@ -29,6 +32,13 @@ const Profile = () => {
                     </li>
                 </ul>
             </div>
+            <button
+                onClick={() => {
+                    auth.signOut();
+                }}
+            >
+                sign out
+            </button>
         </section>
     );
 };
