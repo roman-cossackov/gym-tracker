@@ -12,11 +12,9 @@
     "format": "prettier --write src/app"
   },
   "dependencies": {
-    "firebase": "^10.6.0",
     "next": "14.0.1",
     "react": "^18",
-    "react-dom": "^18",
-    "react-firebaseui": "^6.0.0"
+    "react-dom": "^18"
   },
   "devDependencies": {
     "@types/node": "^20",
