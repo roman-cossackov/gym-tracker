@@ -1,0 +1,24 @@
+.profile {
+    flex: 1;
+    height: 500px;
+    text-align: center;
+}
+.avatar {
+    background-color: rgb(244, 241, 241);
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+    margin: 20px auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.info {
+}
+.info ul {
+    list-style: none;
+}
+.info ul li {
+    list-style: none;
+    text-align: left;
+}
