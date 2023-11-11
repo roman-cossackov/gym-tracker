@@ -1,7 +1,6 @@
 "use client";
 
 import styles from "../css/Profile.module.css";
-import { auth } from "../../../firebase/firebase";
 
 const Profile = () => {
     return (

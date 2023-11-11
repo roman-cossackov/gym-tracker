@@ -1,4 +1,4 @@
-import styles from '../css/CurrentDay.module.css'
+import styles from "../css/CurrentDay.module.css";
 
 const CurrentDay = () => {
     return (
