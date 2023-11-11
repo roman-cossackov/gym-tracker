@@ -10,6 +10,7 @@ import "firebase/compat/auth";
 import "./globals.css";
 import Navbar from "./components/Navbar";
 import { auth } from "../../firebase/firebase";
+import Loader from "./components/Loader";
 import styles from "./layout.module.css";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -31,10 +32,12 @@ export default function RootLayout({
     children: React.ReactNode;
 }) {
     const [isSignedIn, setIsSignedIn] = useState(false);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const unregisterAuthObserver = auth.onAuthStateChanged((user) => {
             setIsSignedIn(!!user);
+            setLoading(false);
         });
         return () => unregisterAuthObserver();
     }, []);
@@ -42,14 +45,18 @@ export default function RootLayout({
     const content = !isSignedIn ? (
         <html lang="en">
             <body className={inter.className}>
-                <div className={styles.authentication}>
-                    <h1>Gym Tracker</h1>
-                    <p>Please sign-in:</p>
-                    <StyledFirebaseAuth
-                        uiConfig={uiConfig}
-                        firebaseAuth={auth}
-                    />
-                </div>
+                {loading ? (
+                    <Loader />
+                ) : (
+                    <div className={styles.authentication}>
+                        <h1>Gym Tracker</h1>
+                        <p>Please sign-in:</p>
+                        <StyledFirebaseAuth
+                            uiConfig={uiConfig}
+                            firebaseAuth={auth}
+                        />
+                    </div>
+                )}
             </body>
         </html>
     ) : (
