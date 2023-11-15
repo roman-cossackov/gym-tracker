@@ -1,28 +1,34 @@
+import { useEffect, useState } from "react";
+import { useDatabase } from "../context/FirestoreContext";
+import { useQuery } from "@tanstack/react-query";
+
 import styles from "../css/CurrentDay.module.css";
 
 const CurrentDay = () => {
+    const [loading, setLoading] = useState<boolean>(false);
+    const [docs, setDocs] = useState<object[]>([]);
+
+    const { routineQuery } = useDatabase();
+
+    if (routineQuery.isPending) {
+        return <>...Loading</>;
+    }
+
+    if (routineQuery.isError) {
+        return <>Error!</>;
+    }
+
     return (
         <>
-            <h3 className={styles.date}>November 7 2023, tuesday</h3>
+            <h2 className={styles.date}>November 16, 2023</h2>
             <ul className={styles.list}>
-                <li>
-                    <input id="item1" type="checkbox" />
-                    <label htmlFor="item1">Потренироваться</label>
-                </li>
-                <li>
-                    <input id="item2" type="checkbox" />
-                    <label htmlFor="item2">Поcпать 7 часов</label>
-                </li>
-                <li>
-                    <input id="item3" type="checkbox" />
-                    <label htmlFor="item3">Соблюсти режим питания</label>
-                </li>
-                <li>
-                    <input id="item4" type="checkbox" />
-                    <label htmlFor="item4">Сходить на массаж</label>
-                </li>
+                {routineQuery.data["Список рутины"].map((item) => (
+                    <li key={item.id}>
+                        <input type="checkbox" id={`routine-item${item.id}`}/>
+                        <label htmlFor={`routine-item${item.id}`}>{item.body}</label>
+                    </li>
+                ))}
             </ul>
-            <button className={styles.change}>Change Routine</button>
         </>
     );
 };
