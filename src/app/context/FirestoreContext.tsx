@@ -1,6 +1,6 @@
 import { useContext, createContext, ReactNode } from "react";
 import { db, auth } from "../../../firebase/firebase";
-import { collection, doc, getDoc, getDocs } from "firebase/firestore";
+import { collection, doc, getDoc, getDocs, setDoc } from "firebase/firestore";
 import { useQuery } from "@tanstack/react-query";
 
 import type { DocumentSnapshot, DocumentData } from "firebase/firestore";
@@ -11,7 +11,10 @@ type DatabaseContextProviderProps = {
 };
 
 type DatabaseContext = {
-    user_info: UseQueryResult<object[], Error>;
+    routineQuery: (
+        path: string[]
+    ) => UseQueryResult<DocumentData | null, Error>;
+    addDocToDb: (prevItems: object, newItem: object) => Promise<void>;
 };
 
 const DatabaseContext = createContext({} as DatabaseContext);
@@ -49,13 +52,56 @@ export const DatabaseContextProvider = ({
         });
     };
 
-    const routineQuery = useFirestoreQuery(["user_123412124", "user_tools", "routine"]);
+    const routineQuery = useFirestoreQuery([
+        "user_123412124",
+        "user_tools",
+        "routine",
+    ]);
+
+    const addDocToDb = async (prevItems, newItem) => {
+        const docRef = doc(
+            db,
+            "users",
+            "user_123412124",
+            "user_tools",
+            "routine"
+        );
+        await setDoc(docRef, { "Список рутины": [...prevItems, newItem] });
+    };
+
+    const updateDoc = async (prevItems, id, newBody) => {
+        const index = prevItems.findIndex((item) => item.id === id);
+        prevItems[index].body = newBody;
+        console.log(prevItems);
+
+        const docRef = doc(
+            db,
+            "users",
+            "user_123412124",
+            "user_tools",
+            "routine"
+        );
+        await setDoc(docRef, { "Список рутины": [...prevItems] });
+    };
+
+    const deleteDoc = async (prevItems, id) => {
+        prevItems = prevItems.filter((item) => item.id !== id);
+        const docRef = doc(
+            db,
+            "users",
+            "user_123412124",
+            "user_tools",
+            "routine"
+        );
+        await setDoc(docRef, { "Список рутины": [...prevItems] });
+    };
 
     const contextValue: DatabaseContext = {
         routineQuery,
+        addDocToDb,
+        updateDoc,
+        deleteDoc,
     };
-
-    console.log(routineQuery.data)
 
     return (
         <DatabaseContext.Provider value={contextValue}>
