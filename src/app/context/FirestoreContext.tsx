@@ -11,10 +11,22 @@ type DatabaseContextProviderProps = {
 };
 
 type DatabaseContext = {
-    routineQuery: (
-        path: string[]
-    ) => UseQueryResult<DocumentData | null, Error>;
-    addDocToDb: (prevItems: object, newItem: object) => Promise<void>;
+    routineQuery: UseQueryResult<DocumentData | null, Error>;
+    addDocToDb: (
+        prevItems: DatabaseItem[],
+        newItem: DatabaseItem
+    ) => Promise<void>;
+    updateDoc: (
+        prevItems: DatabaseItem[],
+        id: number,
+        newBody: string
+    ) => Promise<void>;
+    deleteDoc: (prevItems: DatabaseItem[], id: number) => Promise<void>;
+};
+
+type DatabaseItem = {
+    id: number;
+    body: string;
 };
 
 const DatabaseContext = createContext({} as DatabaseContext);
@@ -58,7 +70,10 @@ export const DatabaseContextProvider = ({
         "routine",
     ]);
 
-    const addDocToDb = async (prevItems, newItem) => {
+    const addDocToDb = async (
+        prevItems: DatabaseItem[],
+        newItem: DatabaseItem
+    ) => {
         const docRef = doc(
             db,
             "users",
@@ -69,7 +84,11 @@ export const DatabaseContextProvider = ({
         await setDoc(docRef, { "Список рутины": [...prevItems, newItem] });
     };
 
-    const updateDoc = async (prevItems, id, newBody) => {
+    const updateDoc = async (
+        prevItems: DatabaseItem[],
+        id: number,
+        newBody: string
+    ) => {
         const index = prevItems.findIndex((item) => item.id === id);
         prevItems[index].body = newBody;
         console.log(prevItems);
@@ -84,7 +103,7 @@ export const DatabaseContextProvider = ({
         await setDoc(docRef, { "Список рутины": [...prevItems] });
     };
 
-    const deleteDoc = async (prevItems, id) => {
+    const deleteDoc = async (prevItems: DatabaseItem[], id: number) => {
         prevItems = prevItems.filter((item) => item.id !== id);
         const docRef = doc(
             db,

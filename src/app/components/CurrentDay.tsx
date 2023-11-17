@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPencilAlt, faTrash } from "@fortawesome/fontawesome-free-solid";
+import type { IconProp } from "@fortawesome/fontawesome-svg-core";
 
 import { useDatabase } from "../context/FirestoreContext";
 import styles from "../css/CurrentDay.module.css";
@@ -26,14 +27,14 @@ const CurrentDay = () => {
         <section className={styles.wrapper}>
             <h2 className={styles.date}>November 16, 2023</h2>
             <ul className={styles.list}>
-                {routineQuery.data["Список рутины"].map((item) => (
+                {routineQuery?.data?.["Список рутины"].map((item: {id: number, body: string}) => (
                     <li key={item.id}>
                         <input type="checkbox" id={`routine-item${item.id}`} />
                         <label htmlFor={`routine-item${item.id}`}>
                             {item.body}
                         </label>
                         <FontAwesomeIcon
-                            icon={faPencilAlt}
+                            icon={faPencilAlt as IconProp}
                             className={styles.pencilIcon}
                             onClick={() => {
                                 setShowUpdateDialog(true);
@@ -42,11 +43,11 @@ const CurrentDay = () => {
                             }}
                         />
                         <FontAwesomeIcon
-                            icon={faTrash}
+                            icon={faTrash as IconProp}
                             className={styles.trashIcon}
                             onClick={() => {
                                 deleteDoc(
-                                    routineQuery.data["Список рутины"],
+                                    routineQuery?.data?.["Список рутины"],
                                     item.id
                                 );
                             }}
@@ -76,10 +77,10 @@ const CurrentDay = () => {
                     <button
                         onClick={(event) => {
                             event.preventDefault();
-                            addDocToDb(routineQuery.data["Список рутины"], {
+                            addDocToDb(routineQuery?.data?.["Список рутины"], {
                                 body: newItem,
                                 id:
-                                    routineQuery.data["Список рутины"][
+                                    routineQuery?.data?.["Список рутины"][
                                         routineQuery.data["Список рутины"]
                                             .length - 1
                                     ].id + 1,
@@ -115,7 +116,7 @@ const CurrentDay = () => {
                         onClick={(event) => {
                             event.preventDefault();
                             updateDoc(
-                                routineQuery.data["Список рутины"],
+                                routineQuery?.data?.["Список рутины"],
                                 newUpdateItemId,
                                 newUpdateItem
                             );
