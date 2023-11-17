@@ -3,7 +3,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPencilAlt, faTrash } from "@fortawesome/fontawesome-free-solid";
 
 import { useDatabase } from "../context/FirestoreContext";
-import AddItemDialog from "./AddItemDialog";
 import styles from "../css/CurrentDay.module.css";
 
 const CurrentDay = () => {
