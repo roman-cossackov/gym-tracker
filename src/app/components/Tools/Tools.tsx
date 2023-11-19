@@ -3,12 +3,12 @@
 import React from "react";
 import { useState } from "react";
 
-import styles from "../css/Tools.module.css";
-import CurrentDay from "./CurrentDay";
-import CurrentTrainingPlan from "./CurrentTrainingPlan";
-import CurrentMealPlan from "./CurrentMealPlan";
-import Statistics from "./Statistics";
-import Charts from "./Charts";
+import styles from "./Tools.module.css";
+import CurrentDay from "../CurrentDay/CurrentDay";
+import CurrentTrainingPlan from "../CurrentTrainingPlan/CurrentTrainingPlan";
+import CurrentMealPlan from "../CurrentMealPlan/CurrentMealPlan";
+import Statistics from "../Statistic/Statistics";
+import Charts from "../Charts/Charts";
 
 const Tools = () => {
     const [content, setContent] = useState(<CurrentDay />);

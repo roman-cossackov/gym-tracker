@@ -1,4 +1,4 @@
-import styles from "../css/Statistics.module.css";
+import styles from "./Statistics.module.css";
 
 type Props = {};
 

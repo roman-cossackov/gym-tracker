@@ -14,10 +14,9 @@ import type { User } from "firebase/auth";
 
 import "./globals.css";
 import { auth } from "../../firebase/firebase";
-import Navbar from "./components/Navbar";
-import Loader from "./components/Loader";
+import Navbar from "./components/Navbar/Navbar";
+import Loader from "./components/Loader/Loader";
 import { DatabaseContextProvider } from "./context/FirestoreContext";
-import { useDatabase } from "./context/FirestoreContext";
 import styles from "./layout.module.css";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -31,9 +30,9 @@ const uiConfig = {
 const addUserToDatabase = async (user: User | null) => {
     try {
         const querySnapshot = await getDoc(
-            doc(db, "Users", `user_${user?.uid}`)
+            doc(db, "users", `user_${user?.uid}`)
         );
-        if (!querySnapshot.data()) {
+        if (!querySnapshot.exists()) {
             try {
                 await setDoc(doc(db, "users", `user_${user?.uid}`), {
                     user_info: {
@@ -42,8 +41,38 @@ const addUserToDatabase = async (user: User | null) => {
                         about: "This is About Field",
                     },
                 });
-            } catch (erorr) {
-                console.log(erorr);
+                await setDoc(
+                    doc(
+                        db,
+                        "users",
+                        `user_${user?.uid}`,
+                        "user_tools",
+                        "meal_plan"
+                    ),
+                    { "Ежедневная норма": [] }
+                );
+                await setDoc(
+                    doc(
+                        db,
+                        "users",
+                        `user_${user?.uid}`,
+                        "user_tools",
+                        "training_plan"
+                    ),
+                    { "Тренировочный план": [] }
+                );
+                await setDoc(
+                    doc(
+                        db,
+                        "users",
+                        `user_${user?.uid}`,
+                        "user_tools",
+                        "routine"
+                    ),
+                    { "Список рутины": [] }
+                );
+            } catch (error) {
+                console.log(error);
             }
         }
     } catch (error) {

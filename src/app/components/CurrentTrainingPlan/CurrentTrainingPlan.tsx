@@ -1,27 +1,23 @@
-import styles from "../css/CurrentMealPlan.module.css";
+import styles from "./CurrentTrainingPlan.module.css";
 
 type Props = {};
 
-const CurrentMealPlan = (props: Props) => {
+const CurrentTrainingPlan = (props: Props) => {
     return (
         <>
             <h3 className={styles.date}>November 7 2023, tuesday</h3>
             <ul className={styles.list}>
                 <li>
                     <input type="checkbox" id="item1" />
-                    <label htmlFor="item1">3 яйца</label>
+                    <label htmlFor="item1">Атжуманя 10 раз</label>
                 </li>
                 <li>
                     <input type="checkbox" id="item1" />
-                    <label htmlFor="item1">100 грамм кукурузых хлопьев</label>
+                    <label htmlFor="item1">Бегат 20 минут</label>
                 </li>
                 <li>
                     <input type="checkbox" id="item1" />
-                    <label htmlFor="item1">200 грамм куринного фарша</label>
-                </li>
-                <li>
-                    <input type="checkbox" id="item1" />
-                    <label htmlFor="item1">200 грамм риса</label>
+                    <label htmlFor="item1">Прэс качат 3 по 15</label>
                 </li>
                 <button className={styles.change}>Change Routine</button>
             </ul>
@@ -29,4 +25,4 @@ const CurrentMealPlan = (props: Props) => {
     );
 };
 
-export default CurrentMealPlan;
+export default CurrentTrainingPlan;

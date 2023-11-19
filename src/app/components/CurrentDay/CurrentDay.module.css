@@ -24,10 +24,4 @@
 .addNewButton:hover {
     text-decoration: underline;
 }
-.pencilIcon {
-    margin: 0 5px;
-}
-.addItemDialog, .updateItemDialog {
-    border: 1px solid black;
-    border-radius: 5px;
-}
+

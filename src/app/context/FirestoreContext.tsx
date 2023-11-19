@@ -1,9 +1,9 @@
 import { useContext, createContext, ReactNode } from "react";
 import { db, auth } from "../../../firebase/firebase";
-import { collection, doc, getDoc, getDocs, setDoc } from "firebase/firestore";
+import { doc, getDoc, setDoc } from "firebase/firestore";
 import { useQuery } from "@tanstack/react-query";
 
-import type { DocumentSnapshot, DocumentData } from "firebase/firestore";
+import type { DocumentData } from "firebase/firestore";
 import type { UseQueryResult } from "@tanstack/react-query";
 
 type DatabaseContextProviderProps = {
@@ -12,19 +12,22 @@ type DatabaseContextProviderProps = {
 
 type DatabaseContext = {
     routineQuery: UseQueryResult<DocumentData | null, Error>;
+    mealPlanQuery: UseQueryResult<DocumentData | null, Error>;
     addDocToDb: (
         prevItems: DatabaseItem[],
-        newItem: DatabaseItem
+        newItem: DatabaseItem,
+        path: string[]
     ) => Promise<void>;
     updateDoc: (
         prevItems: DatabaseItem[],
         id: number,
-        newBody: string
+        newBody: string,
+        path: string[]
     ) => Promise<void>;
     deleteDoc: (prevItems: DatabaseItem[], id: number) => Promise<void>;
 };
 
-type DatabaseItem = {
+export type DatabaseItem = {
     id: number;
     body: string;
 };
@@ -52,71 +55,79 @@ export const DatabaseContextProvider = ({
                 return null;
             }
         } catch (error) {
-            console.error("Error fetching document:", error);
+            console.error("Error while fetching document:", error);
             return null;
         }
     };
 
-    const useFirestoreQuery = (path: string[]) => {
+    const useFirestoreQuery = (key: string, path: string[]) => {
         return useQuery({
-            queryKey: ["firebaseData"],
+            queryKey: [key],
             queryFn: () => getDocFromDb(path),
         });
     };
 
-    const routineQuery = useFirestoreQuery([
-        "user_123412124",
+    const routineQuery = useFirestoreQuery("routineData", [
+        `user_${user?.uid}`,
         "user_tools",
         "routine",
     ]);
 
+    const mealPlanQuery = useFirestoreQuery("mealPlanData", [
+        `user_${user?.uid}`,
+        "user_tools",
+        "meal_plan",
+    ]);
+
     const addDocToDb = async (
         prevItems: DatabaseItem[],
-        newItem: DatabaseItem
+        newItem: DatabaseItem,
+        path: string[]
     ) => {
-        const docRef = doc(
-            db,
-            "users",
-            "user_123412124",
-            "user_tools",
-            "routine"
-        );
-        await setDoc(docRef, { "Список рутины": [...prevItems, newItem] });
+        try {
+            const docRef = doc(db, "users", `user_${user?.uid}`, ...path);
+            await setDoc(docRef, { "Список рутины": [...prevItems, newItem] });
+        } catch (error) {
+            console.error("Error while adding document:", error);
+        }
     };
 
     const updateDoc = async (
         prevItems: DatabaseItem[],
         id: number,
-        newBody: string
+        newBody: string,
+        path: string[]
     ) => {
-        const index = prevItems.findIndex((item) => item.id === id);
-        prevItems[index].body = newBody;
-        console.log(prevItems);
+        try {
+            const index = prevItems.findIndex((item) => item.id === id);
+            prevItems[index].body = newBody;
 
-        const docRef = doc(
-            db,
-            "users",
-            "user_123412124",
-            "user_tools",
-            "routine"
-        );
-        await setDoc(docRef, { "Список рутины": [...prevItems] });
+            const docRef = doc(db, "users", `user_${user?.uid}`, ...path);
+            await setDoc(docRef, { "Список рутины": [...prevItems] });
+        } catch (error) {
+            console.error("Error while updating document:", error);
+        }
     };
 
     const deleteDoc = async (prevItems: DatabaseItem[], id: number) => {
-        prevItems = prevItems.filter((item) => item.id !== id);
-        const docRef = doc(
-            db,
-            "users",
-            "user_123412124",
-            "user_tools",
-            "routine"
-        );
-        await setDoc(docRef, { "Список рутины": [...prevItems] });
+        try {
+            prevItems = prevItems.filter((item) => item.id !== id);
+            const docRef = doc(
+                db,
+                "users",
+                "user_123412124",
+                "user_tools",
+                "routine"
+            );
+            await setDoc(docRef, { "Список рутины": [...prevItems] });
+        } catch (error) {
+            console.error("Error while deleting document:", error);
+        }
     };
 
     const contextValue: DatabaseContext = {
         routineQuery,
+        mealPlanQuery,
         addDocToDb,
         updateDoc,
         deleteDoc,
