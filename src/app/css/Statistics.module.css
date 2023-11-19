@@ -1,0 +1,13 @@
+.header {
+    text-align: start;
+    margin-left: 30px;
+}
+.list {
+    list-style: none;
+}
+.list li {
+    text-align: start;
+}
+.change {
+    margin-right: 800px;
+}

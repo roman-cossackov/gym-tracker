@@ -12,6 +12,12 @@
     "format": "prettier --write src/app"
   },
   "dependencies": {
+    "@fortawesome/fontawesome": "^1.1.8",
+    "@fortawesome/fontawesome-free-regular": "^5.0.13",
+    "@fortawesome/fontawesome-free-solid": "^5.0.13",
+    "@fortawesome/fontawesome-svg-core": "^6.4.2",
+    "@fortawesome/react-fontawesome": "^0.2.0",
+    "@tanstack/react-query": "^5.8.4",
     "firebase": "^10.6.0",
     "next": "14.0.1",
     "react": "^18",
