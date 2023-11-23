@@ -5,20 +5,29 @@
 }
 .avatar {
     background-color: rgb(244, 241, 241);
-    width: 110px;
-    height: 110px;
+    width: 250px;
+    height: 250px;
     border-radius: 50%;
     margin: 20px auto;
     display: flex;
     align-items: center;
     justify-content: center;
+    overflow: hidden;
 }
 .info {
-}
-.info ul {
-    list-style: none;
-}
-.info ul li {
-    list-style: none;
     text-align: left;
+    margin-left: 40px;
+}
+.name {
+    text-align: left;
+    margin-left: 60px;
+}
+.achivements {
+    text-align: left;
+}
+.achivements ul {
+    list-style: none;
+}
+.achivements h3 {
+    margin-left: 50px;
 }

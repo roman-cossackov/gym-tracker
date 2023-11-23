@@ -11,6 +11,7 @@ type DatabaseContextProviderProps = {
 };
 
 type DatabaseContext = {
+    userInfoQuery: UseQueryResult<DocumentData | null, Error>;
     routineQuery: UseQueryResult<DocumentData | null, Error>;
     mealPlanQuery: UseQueryResult<DocumentData | null, Error>;
     addDocToDb: (
@@ -67,11 +68,17 @@ export const DatabaseContextProvider = ({
         });
     };
 
+    const userInfoQuery = useFirestoreQuery("userInfoData", [
+        `user_${user?.uid}`,
+    ]);
+
     const routineQuery = useFirestoreQuery("routineData", [
         `user_${user?.uid}`,
         "user_tools",
         "routine",
     ]);
+
+    const trainingPlanQuery = {};
 
     const mealPlanQuery = useFirestoreQuery("mealPlanData", [
         `user_${user?.uid}`,
@@ -126,6 +133,7 @@ export const DatabaseContextProvider = ({
     };
 
     const contextValue: DatabaseContext = {
+        userInfoQuery,
         routineQuery,
         mealPlanQuery,
         addDocToDb,
