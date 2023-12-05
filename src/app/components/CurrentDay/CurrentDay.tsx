@@ -1,9 +1,10 @@
 import { useState } from "react";
 
-import { useDatabase } from "../../context/FirestoreContext";
-import ListItem from "../ListItem/ListItem";
-import Dialog from "../Dialog/Dialog";
 import styles from "./CurrentDay.module.css";
+import { useDatabase } from "../../context/FirestoreContext";
+import ListItem from "../UI/ListItem/ListItem";
+import Dialog from "../UI/Dialog/Dialog";
+import Button from "../UI/Button/Button";
 
 const CurrentDay = () => {
     const [showAddItemDialog, setShowAddItemDialog] = useState(false);
@@ -26,15 +27,16 @@ const CurrentDay = () => {
         <section className={styles.wrapper}>
             <h2 className={styles.date}>November 16, 2023</h2>
             <ul className={styles.list}>
-                {routineQuery?.data?.["Список рутины"].map(
-                    (item: { id: number; body: string }) => (
+                {routineQuery.data?.["Список рутины"].map(
+                    (item: { id: number; title: string }) => (
                         <ListItem
                             key={item.id}
                             item={item}
-                            deleteDoc={() =>
+                            deleteItem={() =>
                                 deleteDoc(
-                                    routineQuery?.data?.["Список рутины"],
-                                    item.id
+                                    routineQuery.data?.["Список рутины"],
+                                    item.id,
+                                    ["user_tools", "routine"]
                                 )
                             }
                             setShowUpdateDialog={setShowUpdateItemDialog}
@@ -44,14 +46,14 @@ const CurrentDay = () => {
                     )
                 )}
             </ul>
-            <button
-                className={styles.addNewButton}
+            <Button
+                title={"+ Добавить пункт"}
+                style="add"
                 onClick={() => {
                     setShowAddItemDialog(true);
                 }}
-            >
-                + Добавить пункт
-            </button>
+            />
+
             <Dialog
                 title={"Add Item"}
                 showDialog={showAddItemDialog}
@@ -59,7 +61,7 @@ const CurrentDay = () => {
                 item={newItem}
                 setItem={setNewItem}
                 dialogFunction={() => {
-                    const prevItems = routineQuery?.data?.["Список рутины"];
+                    const prevItems = routineQuery.data?.["Список рутины"];
                     addDocToDb(
                         prevItems,
                         {
@@ -80,10 +82,10 @@ const CurrentDay = () => {
                 setItem={setUpdateItem}
                 dialogFunction={() => {
                     updateDoc(
-                        routineQuery?.data?.["Список рутины"],
+                        routineQuery.data?.["Список рутины"],
                         updateItemId,
                         updateItem,
-                        ["user_tools", "routine"],
+                        ["user_tools", "routine"]
                     );
                 }}
             />

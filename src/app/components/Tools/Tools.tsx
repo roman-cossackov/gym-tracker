@@ -30,7 +30,7 @@ const Tools = () => {
                 </button>
                 <button onClick={() => setContent(<Charts />)}>Charts</button>
             </div>
-            {content}
+            <div className={styles.container}>{content}</div>
         </section>
     );
 };

@@ -5,10 +5,10 @@ import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import Image from "next/image";
 import { StaticImport } from "next/dist/shared/lib/get-img-props";
 
+import styles from "./Profile.module.css";
 import { auth } from "../../../../firebase/firebase";
 import { storage } from "../../../../firebase/firebase";
 import { useDatabase } from "@/app/context/FirestoreContext";
-import styles from "./Profile.module.css";
 import UploadAvatar from "../UploadAvatar/UploadAvatar";
 
 const Profile = () => {

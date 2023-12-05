@@ -1,4 +1,4 @@
-.button {
+.button-blue {
     background-color: #387ff0;
     color: white;
     width: 90px;
@@ -8,9 +8,19 @@
     font-weight: 500;
     font-size: 18px;
 }
-.button:hover {
+.button-blue:hover {
     background-color: #3062b3;
 }
-.button:active{
+.button-blue:active{
     background-color: #3062b3;
+}
+.button-add {
+    margin-left: 30px;
+    border: none;
+    color: rgb(51, 51, 255);
+    font-size: 16px;
+    background-color: rgba(0, 0, 0, 0);
+}
+.button-add:hover {
+    text-decoration: underline;
 }

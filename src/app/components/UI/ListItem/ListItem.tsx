@@ -6,8 +6,8 @@ import type { Dispatch, SetStateAction } from "react";
 import styles from "./ListItem.module.css";
 
 type Props = {
-    item: { id: number; body: string };
-    deleteDoc: () => Promise<void>;
+    item: { id: number; title: string };
+    deleteItem: () => Promise<void> | void;
     setShowUpdateDialog: Dispatch<SetStateAction<boolean>>;
     setUpdateItem: Dispatch<SetStateAction<string>>;
     setUpdateItemId: Dispatch<SetStateAction<number>>;
@@ -15,21 +15,21 @@ type Props = {
 
 const ListItem = ({
     item,
-    deleteDoc,
+    deleteItem,
     setShowUpdateDialog,
     setUpdateItem,
     setUpdateItemId,
 }: Props) => {
     return (
-        <li key={item.id}>
+        <li>
             <input type="checkbox" id={`item${item.id}`} />
-            <label htmlFor={`item${item.id}`}>{item.body}</label>
+            <label htmlFor={`item${item.id}`}>{item.title}</label>
             <FontAwesomeIcon
                 icon={faPencilAlt as IconProp}
                 className={styles.pencilIcon}
                 onClick={() => {
                     setShowUpdateDialog(true);
-                    setUpdateItem(item.body);
+                    setUpdateItem(item.title);
                     setUpdateItemId(item.id);
                 }}
             />
@@ -37,7 +37,7 @@ const ListItem = ({
                 icon={faTrash as IconProp}
                 className={styles.trashIcon}
                 onClick={() => {
-                    deleteDoc();
+                    deleteItem();
                 }}
             />
         </li>

@@ -14,6 +14,7 @@ type DatabaseContext = {
     userInfoQuery: UseQueryResult<DocumentData | null, Error>;
     routineQuery: UseQueryResult<DocumentData | null, Error>;
     mealPlanQuery: UseQueryResult<DocumentData | null, Error>;
+    trainingPlanQuery: UseQueryResult<DocumentData | null, Error>;
     addDocToDb: (
         prevItems: DatabaseItem[],
         newItem: DatabaseItem,
@@ -25,7 +26,12 @@ type DatabaseContext = {
         newBody: string,
         path: string[]
     ) => Promise<void>;
-    deleteDoc: (prevItems: DatabaseItem[], id: number) => Promise<void>;
+    deleteDoc: (
+        prevItems: DatabaseItem[],
+        id: number,
+        path: string[]
+    ) => Promise<void>;
+    addPlanToDb: (plan: object, path: string[]) => Promise<void>;
 };
 
 export type DatabaseItem = {
@@ -78,7 +84,11 @@ export const DatabaseContextProvider = ({
         "routine",
     ]);
 
-    const trainingPlanQuery = {};
+    const trainingPlanQuery = useFirestoreQuery("trainingPlanData", [
+        `user_${user?.uid}`,
+        "user_tools",
+        "training_plan"
+    ]);
 
     const mealPlanQuery = useFirestoreQuery("mealPlanData", [
         `user_${user?.uid}`,
@@ -116,19 +126,26 @@ export const DatabaseContextProvider = ({
         }
     };
 
-    const deleteDoc = async (prevItems: DatabaseItem[], id: number) => {
+    const deleteDoc = async (
+        prevItems: DatabaseItem[],
+        id: number,
+        path: string[],
+    ) => {
         try {
             prevItems = prevItems.filter((item) => item.id !== id);
-            const docRef = doc(
-                db,
-                "users",
-                "user_123412124",
-                "user_tools",
-                "routine"
-            );
+            const docRef = doc(db, "users", `user_${user?.uid}`, ...path);
             await setDoc(docRef, { "Список рутины": [...prevItems] });
         } catch (error) {
             console.error("Error while deleting document:", error);
+        }
+    };
+
+    const addPlanToDb = async (plan: object, path: string[]) => {
+        try {
+            const docRef = doc(db, "users", `user_${user?.uid}`, ...path);
+            await setDoc(docRef, { "Тренировочный план": plan });
+        } catch (error) {
+            console.error("Error while adding plan:", error);
         }
     };
 
@@ -136,9 +153,11 @@ export const DatabaseContextProvider = ({
         userInfoQuery,
         routineQuery,
         mealPlanQuery,
+        trainingPlanQuery,
         addDocToDb,
         updateDoc,
         deleteDoc,
+        addPlanToDb,
     };
 
     return (
