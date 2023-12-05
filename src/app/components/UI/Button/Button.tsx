@@ -3,7 +3,7 @@ import styles from "./Button.module.css";
 type Props = {
     title: string;
     onClick: () => void;
-    style: "blue" | "add"
+    style?: "blue" | "add"
 };
 
 const Button = ({ title, onClick, style }: Props) => {

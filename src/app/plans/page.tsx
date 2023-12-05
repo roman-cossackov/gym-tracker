@@ -1,19 +1,17 @@
 type Props = {};
 
 const Plans = (props: Props) => {
-    /* Здесь отображается план. Можно его поменять вручную нажав на кнопку Change Plan. 
-    Можно формировать его автоматически, добавляя по одному дню каждую тренировку*/
-    return (
-        <>
-            <div>This is plans page</div>
-            <div>Block1</div>
-            <div>Week 1</div>
-            <div>Day 1</div>
-            <div>Присед 5 по 5</div>
-            <div>Жим 3 по 10</div>
-            <button>Change Plan</button>
-        </>
-    );
+  return (
+    <>
+      <h3>On this page you can chose ready-to-use plan</h3>
+      <ul>
+        <li>Plan 1</li>
+        <li>Plan 2</li>
+        <li>Plan 3</li>
+        <li>Plan 4</li>
+      </ul>
+    </>
+  );
 };
 
 export default Plans;

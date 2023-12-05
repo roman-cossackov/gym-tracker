@@ -6,6 +6,8 @@ import Accordion from "../UI/Accordion/Accordion";
 type Props = {};
 
 const CurrentTrainingPlan = (props: Props) => {
+   /* Здесь отображается план. Можно его поменять вручную нажав на кнопку Change Plan. 
+    Можно формировать его автоматически, добавляя по одному дню каждую тренировку*/
   const { trainingPlanQuery } = useDatabase();
   const planData = trainingPlanQuery.data?.["Тренировочный план"];
 
@@ -15,19 +17,19 @@ const CurrentTrainingPlan = (props: Props) => {
     <>
       <Accordion title={planData.title}>
         <ul>
-          {planData.blocks.map((block) => (
+          {planData.blocks.map((block: any) => (
             <li key={block.id}>
               <Accordion title={`Блок ${block.id}`}>
                 <ul>
-                  {block.microblocks.map((microblock) => (
+                  {block.microblocks.map((microblock: any) => (
                     <li key={microblock.id}>
                       <Accordion title={`Микроблок ${microblock.id}`}>
                         <ul>
-                          {microblock.days.map((day) => (
+                          {microblock.days.map((day: any) => (
                             <li key={day.id}>
                               <Accordion title={`День ${day.id}`}>
                                 <ul>
-                                  {day.exercises.map((exercise) => (
+                                  {day.exercises.map((exercise: any) => (
                                     <li key={exercise.id}>{exercise.title}</li>
                                   ))}
                                 </ul>
