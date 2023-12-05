@@ -50,7 +50,8 @@ const CurrentMealPlan = (props: Props) => {
                                 onClick={() => {
                                     deleteDoc(
                                         mealPlanQuery?.data?.["Список рутины"],
-                                        item.id
+                                        item.id,
+                                        ['']
                                     );
                                 }}
                             />
