@@ -15,9 +15,9 @@ const Profile = () => {
     const [avatarUrl, setAvatarUrl] = useState<string>();
     const { userInfoQuery } = useDatabase();
 
-    const uploadAvatar = async (avatar) => {
+    const uploadAvatar = async (avatar: Blob) => {
         const avatarRef = ref(storage, `avatars/${auth?.currentUser?.uid}`);
-        await uploadBytes(avatarRef, avatar as Blob);
+        await uploadBytes(avatarRef, avatar);
     };
 
     const getAvatarUrl = async () => {

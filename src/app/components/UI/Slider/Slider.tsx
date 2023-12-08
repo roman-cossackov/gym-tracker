@@ -1,5 +1,4 @@
 import type { ChangeEvent } from "react";
-
 import { useState } from "react";
 
 import styles from "./Slider.module.css";
@@ -8,6 +7,7 @@ type Props = {
     max: number;
     min: number;
     value: number;
+    width: number;
     defaultValue: number;
     onChange: (event: ChangeEvent) => void;
 };
@@ -23,7 +23,7 @@ const Slider = ({ max, min, value, defaultValue, onChange, width }: Props) => {
                 defaultValue={defaultValue}
                 onChange={onChange}
                 className={styles.slider}
-                style={{ width: width, "--value": value}}
+                style={{ width: width,"--value": value} as React.CSSProperties}
             />
         </div>
     );
