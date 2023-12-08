@@ -12,60 +12,61 @@ import { useDatabase } from "@/app/context/FirestoreContext";
 import UploadAvatar from "../UploadAvatar/UploadAvatar";
 
 const Profile = () => {
-    const [avatarUrl, setAvatarUrl] = useState<string>();
-    const { userInfoQuery } = useDatabase();
+  const [avatarUrl, setAvatarUrl] = useState<string>();
+  const { userInfoQuery } = useDatabase();
 
-    const uploadAvatar = async (avatar: Blob) => {
-        const avatarRef = ref(storage, `avatars/${auth?.currentUser?.uid}`);
-        await uploadBytes(avatarRef, avatar);
-    };
+  const uploadAvatar = async (avatar: Blob) => {
+    const avatarRef = ref(storage, `avatars/${auth?.currentUser?.uid}`);
+    await uploadBytes(avatarRef, avatar);
+  };
 
-    const getAvatarUrl = async () => {
-        const avatarRef = ref(storage, `avatars/${auth?.currentUser?.uid}`);
-        const img = await getDownloadURL(avatarRef);
-        setAvatarUrl(img);
-    };
+  const getAvatarUrl = async () => {
+    const avatarRef = ref(storage, `avatars/${auth?.currentUser?.uid}`);
+    const img = await getDownloadURL(avatarRef);
+    setAvatarUrl(img);
+  };
 
-    const name = userInfoQuery.isPending
-        ? "...Loading"
-        : userInfoQuery?.data?.["user_info"]["name"];
+  const name = userInfoQuery.isPending
+    ? "...Loading"
+    : userInfoQuery?.data?.["user_info"]["name"];
 
-    const about = userInfoQuery.isPending
-        ? "...Loading"
-        : userInfoQuery?.data?.["user_info"]["about"];
+  const about = userInfoQuery.isPending
+    ? "...Loading"
+    : userInfoQuery?.data?.["user_info"]["about"];
 
-    const achivements = userInfoQuery?.data?.["user_info"]["achivements"];
+  const achivements = userInfoQuery?.data?.["user_info"]["achivements"];
 
-    useEffect(() => {
-        getAvatarUrl();
-    }, []);
+  useEffect(() => {
+    getAvatarUrl();
+  }, []);
 
-    return (
-        <section className={styles.profile}>
-            <div className={styles.avatar}>
-                {avatarUrl ? (
-                    <Image
-                        src={avatarUrl as string | StaticImport}
-                        alt={"avatar"}
-                        width={250}
-                        height={250}
-                    />
-                ) : (
-                    <p>Profile Photo</p>
-                )}
-            </div>
-            <div>
-                <h3>Upload Avatar</h3>
-                <UploadAvatar onSave={uploadAvatar} />
-            </div>
-            <div className={styles.name}>
-                <h2>{name}</h2>
-            </div>
-            <div className={styles.info}>{about}</div>
-            <hr />
-            <div className={styles.achivements}>
-                <h3>Achivements</h3>
-                <ul>
+  return (
+    <section className={styles.profile}>
+      <div className={styles.avatar}>
+        {avatarUrl ? (
+          <Image
+            src={avatarUrl as string | StaticImport}
+            alt={"avatar"}
+            width={250}
+            height={250}
+          />
+        ) : (
+          <p>Profile Photo</p>
+        )}
+      </div>
+      <div>
+        <h3>Upload Avatar</h3>
+        <UploadAvatar onSave={uploadAvatar} />
+      </div>
+      <div className={styles.name}>
+        <h2>{name}</h2>
+      </div>
+      <div className={styles.info}>{about}</div>
+      <hr />
+      <div className={styles.achivements}>
+        <h3>Achivements</h3>
+        {userInfoQuery.isPending ? "...Loading" : achivements}
+        {/* <ul>
                     {userInfoQuery.isPending
                         ? "...Loading"
                         : achivements.map(
@@ -73,17 +74,17 @@ const Profile = () => {
                                   <li key={item.id}>{item.body}</li>
                               )
                           )}
-                </ul>
-            </div>
-            <button
-                onClick={() => {
-                    auth.signOut();
-                }}
-            >
-                sign out
-            </button>
-        </section>
-    );
+                </ul> */}
+      </div>
+      <button
+        onClick={() => {
+          auth.signOut();
+        }}
+      >
+        sign out
+      </button>
+    </section>
+  );
 };
 
 export default Profile;
