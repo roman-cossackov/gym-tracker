@@ -48,6 +48,27 @@ const CreateNewPlan = (props: Props) => {
 
   const { addPlanToDb } = useDatabase();
 
+  const updateExercise = () => {
+    const updatedPlan = { ...newPlan };
+    const block = updatedPlan.blocks.find(
+      (block) => block.id === updateItemBlockId
+    );
+    const microblock = block?.microblocks.find(
+      (microblock) => microblock.id === updateItemMicroblockId
+    );
+    const day = microblock?.days.find((day) => day.id === updateItemDayId);
+
+    const exercise = day?.exercises.find(
+      (exercise) => exercise.id === updateItemId
+    );
+    if (!exercise) {
+      console.log("Item not Found");
+    } else {
+      exercise.title = updateItem;
+    }
+    setNewPlan(updatedPlan);
+  };
+
   return (
     <>
       <Button
@@ -219,28 +240,7 @@ const CreateNewPlan = (props: Props) => {
             setShowDialog={setShowUpdateItemDialog}
             item={updateItem}
             setItem={setUpdateItem}
-            dialogFunction={() => {
-              const updatedPlan = { ...newPlan };
-              const block = updatedPlan.blocks.find(
-                (block) => block.id === updateItemBlockId
-              );
-              const microblock = block?.microblocks.find(
-                (microblock) => microblock.id === updateItemMicroblockId
-              );
-              const day = microblock?.days.find(
-                (day) => day.id === updateItemDayId
-              );
-
-              const exercise = day?.exercises.find(
-                (exercise) => exercise.id === updateItemId
-              );
-              if (!exercise) {
-                console.log("Item not Found");
-              } else {
-                exercise.title = updateItem;
-              }
-              setNewPlan(updatedPlan);
-            }}
+            dialogFunction={updateExercise}
           />
           <Button title={"Close"} onClick={() => setIsOpen(false)} />
           <Button
