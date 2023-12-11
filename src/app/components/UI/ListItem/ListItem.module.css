@@ -1,0 +1,7 @@
+.pencilIcon {
+    margin: 0 5px;
+}
+.trashIcon:hover,
+.pencilIcon:hover {
+    cursor: pointer;
+}

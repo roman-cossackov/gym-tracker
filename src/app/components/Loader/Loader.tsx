@@ -1,7 +1,7 @@
 import Image from "next/image";
 
-import loader from "../../../public/spinner.gif";
-import styles from "../css/Loader.module.css";
+import loader from "../../../../public/spinner.gif";
+import styles from "./Loader.module.css";
 
 const Loader = () => {
     return (

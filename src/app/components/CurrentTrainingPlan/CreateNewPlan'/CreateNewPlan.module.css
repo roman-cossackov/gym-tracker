@@ -1,0 +1,11 @@
+.wrapper {
+    text-align: left;
+    padding: 20px;
+    padding-left: 40px;
+}
+.wrapper input[type="checkbox"] {
+    display: none;
+}
+.wrapper ul {
+    list-style: none;
+}

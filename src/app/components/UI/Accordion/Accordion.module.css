@@ -1,0 +1,7 @@
+.dropdown {
+    display: grid;
+    transition: grid-template-rows 0.2s ease-in-out;
+}
+.content {
+    overflow: hidden;
+}

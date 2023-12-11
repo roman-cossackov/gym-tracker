@@ -1,4 +1,4 @@
-import styles from "../css/Charts.module.css";
+import styles from "./Charts.module.css";
 
 type Props = {};
 
