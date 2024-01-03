@@ -1,6 +1,6 @@
 import styles from "./CurrentTrainingPlan.module.css";
 import { useDatabase } from "@/app/context/FirestoreContext";
-import CreateNewPlan from "./CreateNewPlan'/CreateNewPlan";
+import CreateNewPlan from "./CreateNewPlan/CreateNewPlan";
 import Accordion from "../UI/Accordion/Accordion";
 import type { block, exercise } from "./types";
 
@@ -13,21 +13,23 @@ const CurrentTrainingPlan = (props: Props) => {
   const planData = trainingPlanQuery.data?.["Тренировочный план"];
   const plan = trainingPlanQuery.isPending ? (
     <p>Loading...</p>
+  ) : trainingPlanQuery.isError ? (
+    <p>Training plan query error</p>
   ) : (
     <>
-      <Accordion title={planData.title}>
+      {planData.title}
         <ul>
           {planData.blocks.map((block: block) => (
             <li key={block.id}>
-              <Accordion title={`Блок ${block.id}`}>
+              <Accordion title={`Блок ${block.id}`} isDropdownOpenInitialValue={true}>
                 <ul>
                   {block.microblocks.map((microblock) => (
                     <li key={microblock.id}>
-                      <Accordion title={`Микроблок ${microblock.id}`}>
+                      <Accordion title={`Микроблок ${microblock.id}`} isDropdownOpenInitialValue={true}>
                         <ul>
                           {microblock.days.map((day) => (
                             <li key={day.id}>
-                              <Accordion title={`День ${day.id}`}>
+                              <Accordion title={`День ${day.id}`} isDropdownOpenInitialValue={true}>
                                 <ul>
                                   {day.exercises.map((exercise: exercise) => (
                                     <li key={exercise.id}>{exercise.title}</li>
@@ -45,7 +47,6 @@ const CurrentTrainingPlan = (props: Props) => {
             </li>
           ))}
         </ul>
-      </Accordion>
     </>
   );
 

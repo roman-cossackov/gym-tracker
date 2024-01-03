@@ -4,11 +4,12 @@ import styles from "./Accordion.module.css";
 
 type Props = {
     title: string,
+    isDropdownOpenInitialValue: boolean,
     children: ReactNode,
 };
 
-const Accordion = ({ title, children }: Props) => {
-    const [isDropdownOpen, setIsDropdownOpen] = useState(true);
+const Accordion = ({ title, isDropdownOpenInitialValue, children }: Props) => {
+    const [isDropdownOpen, setIsDropdownOpen] = useState(isDropdownOpenInitialValue);
 
     return (
         <>

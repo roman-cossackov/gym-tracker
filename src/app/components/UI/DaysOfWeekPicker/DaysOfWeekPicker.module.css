@@ -1,0 +1,14 @@
+.day {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    margin: 0 5px;
+    padding: 0;
+}
+.days {
+    padding: 0;
+    margin: 0px auto;
+}
+.clicked {
+    background: blue;
+}

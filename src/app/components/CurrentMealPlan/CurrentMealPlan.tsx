@@ -16,7 +16,7 @@ const CurrentMealPlan = (props: Props) => {
   const [newUpdateItem, setNewUpdateItem] = useState("");
   const [newUpdateItemId, setNewUpdateItemId] = useState(0);
 
-  const { mealPlanQuery, deleteDoc } = useDatabase();
+  const { mealPlanQuery } = useDatabase();
 
   if (mealPlanQuery.isPending) {
     return <>Loading...</>;
@@ -46,11 +46,11 @@ const CurrentMealPlan = (props: Props) => {
               <IconButton
                 icon="pencil"
                 buttonFunction={() => {
-                  deleteDoc(
-                    mealPlanQuery?.data?.["Список рутины"],
-                    mealItem.id,
-                    [""]
-                  );
+                  // deleteDoc(
+                  //   mealPlanQuery?.data?.["Список рутины"],
+                  //   mealItem.id,
+                  //   [""]
+                  // );
                 }}
               />
             </li>
