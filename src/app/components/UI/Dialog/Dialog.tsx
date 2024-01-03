@@ -1,57 +1,29 @@
-import type { Dispatch, SetStateAction } from "react";
+import type { Dispatch, ReactNode, SetStateAction } from "react";
 
 import styles from "./Dialog.module.css";
 
-type Props = {
-    title: string;
-    showDialog: boolean;
-    setShowDialog: Dispatch<SetStateAction<boolean>>;
-    item: string;
-    setItem: Dispatch<SetStateAction<string>>;
-    dialogFunction: () => void;
-};
+interface DialogProps {
+  showDialog: boolean;
+  children: ReactNode;
+  cursorPotision?: { x: number; y: number };
+}
 
-const Dialog = ({
-    title,
-    showDialog,
-    setShowDialog,
-    item,
-    setItem,
-    dialogFunction,
-}: Props) => {
-    return (
-        <dialog className={styles.dialog} open={showDialog}>
-            <div>{title}</div>
-            <form>
-                <input
-                    type="text"
-                    placeholder="item..."
-                    value={item}
-                    onChange={(event) => {
-                        setItem(event.target.value);
-                    }}
-                />
-                <button
-                    onClick={(event) => {
-                        event.preventDefault();
-                        dialogFunction();
-                        setItem("");
-                        setShowDialog(false);
-                    }}
-                >
-                    Save
-                </button>
-                <button
-                    onClick={(event) => {
-                        event.preventDefault();
-                        setShowDialog(false);
-                    }}
-                >
-                    Cancel
-                </button>
-            </form>
-        </dialog>
-    );
+const Dialog = ({ showDialog, cursorPotision, children }: DialogProps) => {
+  const cursorDialogStyle = {
+    position: "absolute" as const,
+    top: `${cursorPotision?.y}px`,
+    left: `${cursorPotision?.x}px`,
+  } as const;
+
+  return (
+    <dialog
+      className={`${styles.dialog}`}
+      style={cursorDialogStyle}
+      open={showDialog}
+    >
+      {children}
+    </dialog>
+  );
 };
 
 export default Dialog;

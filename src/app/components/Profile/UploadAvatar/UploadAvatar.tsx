@@ -3,15 +3,15 @@ import AvatarEditor from "react-avatar-editor";
 import type { ChangeEvent, SetStateAction } from "react";
 
 import styles from "./UploadAvatar.module.css";
-import Modal from "../UI/Modal/Modal";
-import Slider from "../UI/Slider/Slider";
-import Button from "../UI/Button/Button";
+import Modal from "../../UI/Modal/Modal";
+import Slider from "../../UI/Slider/Slider";
+import Button from "../../UI/Button/Button";
 
-type Props = {
+interface UploadAvatarProps {
   onSave: (avatar: Blob) => Promise<void>;
 };
 
-const UploadAvatar = ({ onSave }: Props) => {
+const UploadAvatar = ({ onSave }: UploadAvatarProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [slideValue, setSlideValue] = useState(10);
   const [src, setSrc] = useState<string>("");

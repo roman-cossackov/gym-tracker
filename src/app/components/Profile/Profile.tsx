@@ -9,7 +9,7 @@ import styles from "./Profile.module.css";
 import { auth } from "../../../../firebase/firebase";
 import { storage } from "../../../../firebase/firebase";
 import { useDatabase } from "@/app/context/FirestoreContext";
-import UploadAvatar from "../UploadAvatar/UploadAvatar";
+import UploadAvatar from "./UploadAvatar/UploadAvatar";
 
 const Profile = () => {
   const [avatarUrl, setAvatarUrl] = useState<string>();

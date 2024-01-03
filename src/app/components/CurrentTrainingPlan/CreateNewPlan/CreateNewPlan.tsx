@@ -17,15 +17,19 @@ const CreateNewPlan = (props: Props) => {
       {
         id: 1,
         title: "",
+        isCompleted: false,
         microblocks: [
           {
             id: 1,
+            isCompleted: false,
             days: [
               {
                 id: 1,
+                isCompleted: false,
                 exercises: [
                   {
                     id: 1,
+                    isCompleted: false,
                     title: "Упражнение 1",
                   },
                 ],
@@ -40,7 +44,7 @@ const CreateNewPlan = (props: Props) => {
   const [isOpen, setIsOpen] = useState(false);
   const [newPlan, setNewPlan] = useState(planTemplate);
   const [showUpdateItemDialog, setShowUpdateItemDialog] = useState(false);
-  const [updateItem, setUpdateItem] = useState("");
+  const [updateItem, setUpdateItem] = useState<string>("");
   const [updateItemId, setUpdateItemId] = useState(0);
   const [updateItemBlockId, setUpdateItemBlockId] = useState(0);
   const [updateItemMicroblockId, setUpdateItemMicroblockId] = useState(0);
@@ -76,7 +80,7 @@ const CreateNewPlan = (props: Props) => {
         onClick={() => setIsOpen(true)}
         style={"blue"}
       />
-      <Modal isOpen={isOpen} height={500} width={800}>
+      <Modal isOpen={isOpen} height={500} width={800} overlayOnCLick={() => setIsOpen(false)}>
         <div className={styles.wrapper}>
           <h3 className={styles.header}>CreateNewPlan</h3>
           <div>
@@ -95,15 +99,24 @@ const CreateNewPlan = (props: Props) => {
           <ul>
             {newPlan.blocks.map((block) => (
               <li key={block.id}>
-                <Accordion title={block.title || "New Block"}>
+                <Accordion
+                  title={block.title || "New Block"}
+                  isDropdownOpenInitialValue={true}
+                >
                   <ul>
                     {block.microblocks.map((microblock) => (
                       <li key={microblock.id}>
-                        <Accordion title={`Microblock ${microblock.id}`}>
+                        <Accordion
+                          title={`Microblock ${microblock.id}`}
+                          isDropdownOpenInitialValue={true}
+                        >
                           <ul>
                             {microblock.days.map((day) => (
                               <li key={day.id}>
-                                <Accordion title={`Day ${day.id}`}>
+                                <Accordion
+                                  title={`Day ${day.id}`}
+                                  isDropdownOpenInitialValue={true}
+                                >
                                   <ul>
                                     {day.exercises.map((exercise) => (
                                       <ListItem
@@ -126,11 +139,6 @@ const CreateNewPlan = (props: Props) => {
                                             microblock.id
                                           );
                                           setUpdateItemDayId(day.id);
-                                          console.log(
-                                            updateItemBlockId,
-                                            updateItemMicroblockId,
-                                            updateItemDayId
-                                          );
                                         }}
                                         setUpdateItem={setUpdateItem}
                                         setUpdateItemId={setUpdateItemId}
@@ -148,6 +156,7 @@ const CreateNewPlan = (props: Props) => {
                                         id:
                                           exercises[exercises.length - 1].id +
                                           1,
+                                        isCompleted: false,
                                       });
                                       setNewPlan(updatedPlan);
                                     }}
@@ -164,10 +173,12 @@ const CreateNewPlan = (props: Props) => {
                               const days = microblock.days;
                               days.push({
                                 id: days[days.length - 1].id + 1,
+                                isCompleted: false,
                                 exercises: [
                                   {
                                     id: 1,
                                     title: "Упражнение 1",
+                                    isCompleted: false,
                                   },
                                 ],
                               });
@@ -186,13 +197,16 @@ const CreateNewPlan = (props: Props) => {
                       const microblocks = block.microblocks;
                       microblocks.push({
                         id: microblocks[microblocks.length - 1].id + 1,
+                        isCompleted: false,
                         days: [
                           {
                             id: 1,
+                            isCompleted: false,
                             exercises: [
                               {
                                 id: 1,
                                 title: "Упражнение 1",
+                                isCompleted: false,
                               },
                             ],
                           },
@@ -213,16 +227,20 @@ const CreateNewPlan = (props: Props) => {
               blocks.push({
                 id: 1,
                 title: "",
+                isCompleted: false,
                 microblocks: [
                   {
                     id: blocks[blocks.length - 1].id + 1,
+                    isCompleted: false,
                     days: [
                       {
                         id: 1,
+                        isCompleted: false,
                         exercises: [
                           {
                             id: 1,
                             title: "Упражнение 1",
+                            isCompleted: false,
                           },
                         ],
                       },
@@ -234,14 +252,24 @@ const CreateNewPlan = (props: Props) => {
             }}
           />
 
-          <Dialog
-            title={"Update Item"}
-            showDialog={showUpdateItemDialog}
-            setShowDialog={setShowUpdateItemDialog}
-            item={updateItem}
-            setItem={setUpdateItem}
-            dialogFunction={updateExercise}
-          />
+          <Dialog showDialog={showUpdateItemDialog}>
+            <input
+              type="text"
+              value={updateItem}
+              onChange={(e) => setUpdateItem(e.target.value)}
+            />
+            <button
+              onClick={() => {
+                updateExercise();
+                () => setShowUpdateItemDialog(false);
+              }}
+            >
+              Save
+            </button>
+            <button onClick={() => setShowUpdateItemDialog(false)}>
+              Cancel
+            </button>
+          </Dialog>
           <Button title={"Close"} onClick={() => setIsOpen(false)} />
           <Button
             title={"Save"}
