@@ -11,7 +11,7 @@ const DaysOfWeekPicker = (props: DaysOfWeekPickerProps) => {
   const {selectedDays, setSelectedDays} = props;
 
   const onSelectDayHandler = (day: string) => {
-    if (selectedDays.indexOf(day) === -1) {
+    if (!selectedDays.includes(day)) {
       setSelectedDays((prev) => [...prev, day]);
     } else {
       const newSelectedDays = selectedDays.filter((d) => d !== day);
