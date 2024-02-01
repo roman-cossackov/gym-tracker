@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 import styles from "./CreateNewPlan.module.css";
-import { useDatabase } from "@/app/context/FirestoreContext";
+import { useDatabase } from "@/context/FirestoreContext";
 import Modal from "../../UI/Modal/Modal";
 import Button from "../../UI/Button/Button";
 import Accordion from "../../UI/Accordion/Accordion";

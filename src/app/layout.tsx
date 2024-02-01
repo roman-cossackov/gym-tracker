@@ -7,16 +7,16 @@ import { StyledFirebaseAuth } from "react-firebaseui";
 import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
 import { doc, getDoc, setDoc, collection } from "firebase/firestore";
-import { db } from "../../firebase/firebase";
+import { db } from "../config/firebase/firebase";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 import type { User } from "firebase/auth";
 
 import "./globals.css";
-import { auth } from "../../firebase/firebase";
-import Navbar from "./components/Navbar/Navbar";
-import Loader from "./components/Loader/Loader";
-import { DatabaseContextProvider } from "./context/FirestoreContext";
+import { auth } from "../config/firebase/firebase";
+import Navbar from "../components/Navbar/Navbar";
+import Loader from "../components/Loader/Loader";
+import { DatabaseContextProvider } from "../context/FirestoreContext";
 import styles from "./layout.module.css";
 
 const inter = Inter({ subsets: ["latin"] });

@@ -1,5 +1,5 @@
 import styles from "./CurrentTrainingPlan.module.css";
-import { useDatabase } from "@/app/context/FirestoreContext";
+import { useDatabase } from "@/context/FirestoreContext";
 import CreateNewPlan from "./CreateNewPlan/CreateNewPlan";
 import Accordion from "../UI/Accordion/Accordion";
 import type { block, exercise } from "./types";

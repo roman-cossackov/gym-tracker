@@ -1,5 +1,5 @@
 import { useContext, createContext, ReactNode } from "react";
-import { db, auth } from "../../../firebase/firebase";
+import { db, auth } from "@/config/firebase/firebase";
 import { doc, getDoc, setDoc } from "firebase/firestore";
 import { useQuery } from "@tanstack/react-query";
 

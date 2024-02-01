@@ -10,6 +10,12 @@
 }
 .list li {
     text-align: start;
+    margin-bottom: 5px;
+    width: max-content;
+    height: 22.5px;
+}
+.list li:hover {
+    background-color: rgb(236, 234, 234);
 }
 .change {
     margin-right: 800px;

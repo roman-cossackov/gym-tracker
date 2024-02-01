@@ -1,6 +1,6 @@
 import Image from "next/image";
 
-import loader from "../../../../public/spinner.gif";
+import loader from "@/assets/gifs/spinner.gif";
 import styles from "./Loader.module.css";
 
 const Loader = () => {

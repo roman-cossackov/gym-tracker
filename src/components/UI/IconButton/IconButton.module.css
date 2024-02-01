@@ -1,0 +1,12 @@
+.btn {
+    background-color: transparent;
+    border: none;
+    color: rgb(103, 102, 102);
+    padding: 2px 3px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-left: 3px;
+}
+.btn:hover {
+    color: rgb(30, 30, 30);
+}

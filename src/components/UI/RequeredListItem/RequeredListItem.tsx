@@ -15,16 +15,16 @@ const RequeredListItem = ({
   onClick,
 }: RequeredListItemProps) => {
   return (
-    <li>
-      <div className={styles.cogButton}>
-        <IconButton icon="cog" buttonFunction={onClick} />
-      </div>
+    <>
       <div className={styles.content}>
-        <Accordion title={title} isDropdownOpenInitialValue={false}>
+        <Accordion title={title} isDropdownOpenInitialValue={false} hasButton={true}>
           {content}
         </Accordion>
       </div>
-    </li>
+      {/* <div className={styles.cogButton}>
+        <IconButton icon="cog" buttonFunction={onClick} />
+      </div> */}
+    </>
   );
 };
 

@@ -9,11 +9,12 @@ import RequeredListItem from "../UI/RequeredListItem/RequeredListItem";
 import Modal from "../UI/Modal/Modal";
 import DaysOfWeekPicker from "../UI/DaysOfWeekPicker/DaysOfWeekPicker";
 import { block, microblock, day, exercise } from "../CurrentTrainingPlan/types";
+import { ButtonTheme } from "../UI/Button/Button";
 
 const CurrentDay = () => {
   const [showAddItemDialog, setShowAddItemDialog] = useState(false);
   const [newItem, setNewItem] = useState("");
-  const [showUpdateItemDialog, setShowUpdateItemDialog] = useState(false);
+  const [showListItemDialog, setShowListItemDialog] = useState(false);
   const [updateItem, setUpdateItem] = useState("");
   const [updateItemId, setUpdateItemId] = useState(0);
   const [trainingPlanModal, setTrainingPlanModal] = useState(false);
@@ -21,7 +22,18 @@ const CurrentDay = () => {
   const [sleepPlanModal, setSleepPlanModal] = useState(false);
   const [showChangeRepetitionsDialog, setShowChangeRepetitionsDialog] =
     useState(false);
-  const [cursorPotision, setCursorPotision] = useState({ x: 0, y: 0 });
+  const [
+    changeRepetitionsDialogCursorPotision,
+    setChangeRepetitionsDialogCursorPotision,
+  ] = useState({ x: 0, y: 0 });
+  const [addItemDialogPotision, setAddItemDialogPotision] = useState({
+    x: 0,
+    y: 0,
+  });
+  const [listItemDialogPotision, setListItemDialogPotision] = useState({
+    x: 0,
+    y: 0,
+  });
   const [changeRepetitionsDialogMode, setChangeRepetitionsDialogMode] =
     useState<"days" | "frequency">("days");
   const [selectedDays, setSelectedDays] = useState<string[]>([]);
@@ -70,38 +82,38 @@ const CurrentDay = () => {
     planData.title
   );
 
-  const updateItemDialogContent = (
+  const listItemDialogContent = (
     <>
       <h1>Update Item</h1>
-        <input
-          type="text"
-          placeholder="item..."
-          value={updateItem}
-          onChange={(event) => {
-            setUpdateItem(event.target.value);
-          }}
-        />
-        <button
-          onClick={(event) => {
-            updateItemInRoutineArray(
-              routineQuery.data?.["Список рутины"],
-              updateItemId,
-              updateItem,
-              ["user_tools", "routine"]
-            );
-            setUpdateItem("");
-            setShowUpdateItemDialog(false);
-          }}
-        >
-          Save
-        </button>
-        <button
-          onClick={(event) => {
-            setShowUpdateItemDialog(false);
-          }}
-        >
-          Cancel
-        </button>
+      <input
+        type="text"
+        placeholder="item..."
+        value={updateItem}
+        onChange={(event) => {
+          setUpdateItem(event.target.value);
+        }}
+      />
+      <button
+        onClick={(event) => {
+          updateItemInRoutineArray(
+            routineQuery.data?.["Список рутины"],
+            updateItemId,
+            updateItem,
+            ["user_tools", "routine"]
+          );
+          setUpdateItem("");
+          setShowListItemDialog(false);
+        }}
+      >
+        Save
+      </button>
+      <button
+        onClick={(event) => {
+          setShowListItemDialog(false);
+        }}
+      >
+        Cancel
+      </button>
     </>
   );
 
@@ -253,13 +265,13 @@ const CurrentDay = () => {
   return (
     <section className={styles.wrapper}>
       <h2 className={styles.date}>{`${today}`}</h2>
-      <ul className={styles.list}>
-        <RequeredListItem
-          title={"Потренироваться"}
-          content={trainingListItem}
-          onClick={() => setTrainingPlanModal(true)}
-        />
-        {/* <RequeredListItem
+
+      <RequeredListItem
+        title={"Потренироваться"}
+        content={trainingListItem}
+        onClick={() => setTrainingPlanModal(true)}
+      />
+      {/* <RequeredListItem
           title={"Соблюсти режим питания"}
           content={"здесь будет написано че надо схавать"}
           onClick={() => setMealPlanModal(true)}
@@ -269,39 +281,7 @@ const CurrentDay = () => {
           content={"здесь будет написано сколько нужно поспать"}
           onClick={() => setSleepPlanModal(true)}
         /> */}
-        <Modal
-          isOpen={trainingPlanModal}
-          overlayOnCLick={() => setTrainingPlanModal(false)}
-          height={400}
-          width={600}
-        >
-          <p>Current plan: {planTitle}</p>
-          <p>{RepetitionsOfTraining}</p>
-          <button
-            onClick={(event) => {
-              const xCursorPotision =
-                event.clientX - (window.innerWidth - 600) / 2;
-              const yCursorPosition =
-                event.clientY - (window.innerHeight - 400) / 2;
-              setCursorPotision({ x: xCursorPotision, y: yCursorPosition });
-              setShowChangeRepetitionsDialog((prev) => !prev);
-            }}
-          >
-            Change Freaquency
-          </button>
-          <Dialog
-            showDialog={showChangeRepetitionsDialog}
-            cursorPotision={cursorPotision}
-          >
-            <button onClick={() => setChangeRepetitionsDialogMode("frequency")}>
-              Frequency
-            </button>
-            <button onClick={() => setChangeRepetitionsDialogMode("days")}>
-              Weekly on
-            </button>
-            {changePeriodicityDialogContent}
-          </Dialog>
-        </Modal>
+      <ul className={styles.list}>
         {routineQuery.data?.["Список рутины"].map(
           (item: { id: number; title: string }) => (
             <ListItem
@@ -314,25 +294,64 @@ const CurrentDay = () => {
                   ["user_tools", "routine"]
                 )
               }
-              setShowUpdateDialog={setShowUpdateItemDialog}
+              setShowListItemDialog={setShowListItemDialog}
               setUpdateItem={setUpdateItem}
               setUpdateItemId={setUpdateItemId}
+              setDialogPotision={setListItemDialogPotision}
             />
           )
         )}
       </ul>
       <Button
         title={"+ Добавить пункт"}
-        style="add"
+        style={ButtonTheme.ADD}
         onClick={() => {
           setShowAddItemDialog(true);
         }}
       />
-
-      <Dialog showDialog={showUpdateItemDialog}>
-        {updateItemDialogContent}
+      <Dialog
+        showDialog={showListItemDialog}
+        cursorPotision={listItemDialogPotision}
+      >
+        {listItemDialogContent}
       </Dialog>
       <Dialog showDialog={showAddItemDialog}>{addItemDialogContent}</Dialog>
+      <Modal
+        isOpen={trainingPlanModal}
+        overlayOnCLick={() => setTrainingPlanModal(false)}
+        height={400}
+        width={600}
+      >
+        <p>Current plan: {planTitle}</p>
+        <p>{RepetitionsOfTraining}</p>
+        <button
+          onClick={(event) => {
+            const xCursorPotision =
+              event.clientX - (window.innerWidth - 600) / 2;
+            const yCursorPosition =
+              event.clientY - (window.innerHeight - 400) / 2;
+            setChangeRepetitionsDialogCursorPotision({
+              x: xCursorPotision,
+              y: yCursorPosition,
+            });
+            setShowChangeRepetitionsDialog((prev) => !prev);
+          }}
+        >
+          Change Freaquency
+        </button>
+        <Dialog
+          showDialog={showChangeRepetitionsDialog}
+          cursorPotision={changeRepetitionsDialogCursorPotision}
+        >
+          <button onClick={() => setChangeRepetitionsDialogMode("frequency")}>
+            Frequency
+          </button>
+          <button onClick={() => setChangeRepetitionsDialogMode("days")}>
+            Weekly on
+          </button>
+          {changePeriodicityDialogContent}
+        </Dialog>
+      </Modal>
     </section>
   );
 };
